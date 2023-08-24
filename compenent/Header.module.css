@@ -1,0 +1,22 @@
+.header{
+    background-color: rgb(153, 90, 211);
+    color: aliceblue;
+}
+.header{
+    background-color: purple;
+    color: white;
+    padding: 10px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .header nav {
+    color: white;
+    text-decoration: none;
+    margin: 0 10px;
+    font-weight: bold;
+  }
+  .header p{
+    font-size: 15px;
+    font-weight: 600;
+  }

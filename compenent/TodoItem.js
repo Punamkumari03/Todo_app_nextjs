@@ -1,21 +1,43 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 const TodoItem = (props) => {
-  // const {id,text,isCompleted} = todo;
+  const [done, setDone] = useState(false);
+
+  useEffect(() => {
+    setDone(props.isCompleted);
+  }, []);
+
+  const updateTodoHandler = async () => {
+    setDone(true);
+    const response = await fetch("/api/update-todo", {
+      method: "POST",
+      body: JSON.stringify({
+        title: props.title,
+        _id: props.id,
+        isCompleted: true,
+      }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    const data = await response.json();
+    console.log(data);
+  };
+  const deleteTodoHandler = () => {
+    props.onDelete(props.id);
+  };
+
   return (
     <>
-      <li>
-        <input
-          type="checkbox"
-          checked={props.isCompleted}
-          onChange={() => {
-            props.onToggle(props.id);
-          }}
-        ></input>
-        <span className={props.isCompleted ? "completed" : ""}>
-          {props.text}
-        </span>
-        <button onClick={() => props.onDelete(props.id)}>Delete</button>
+      <li id={props.id}>
+        {done ? <p>{props.title}</p> : <p>{props.title}</p>}
+
+        {props.type === "todo" && (
+          <button onClick={updateTodoHandler} disabled={done}>
+            Done
+          </button>
+        )}
+        <button onClick={deleteTodoHandler}>Remove</button>
       </li>
     </>
   );
